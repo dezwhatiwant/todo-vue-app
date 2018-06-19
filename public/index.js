@@ -4,10 +4,22 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      task: "Make the bed",
-      task2: "Mow the lawn",
-      task3: "Feed the dog"
+      tasks: [
+        { id: 1,
+          text: "Make the bed",
+          completed: false
+        },
 
+        { id: 2,
+          text: "Mow the lawn",
+          completed: false
+        },
+
+        { id: 3,
+          text: "Feed the dog",
+          completed: false
+        }
+      ],
     };
   },
   created: function() {},

@@ -20,10 +20,13 @@
 <template id="home-page">
   <div class="vue-component">
 
-    <h1>{{ task }}</h1>
-    <h1>{{ task2 }}</h1>
-    <h1>{{ task3 }}</h1>
+    <ul>
+      <li v-for="task in tasks">
+        {{ task.id }} --- {{ task.text }} --- Completed: {{ task.completed }}
+      </li>
+    </ul>
 
+    <input v-model="tasks[0]['text']">
 
   </div>
 </template>
