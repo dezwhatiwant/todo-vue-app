@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My App</title>
+  <title>TO-DO App Vue.JS</title>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
@@ -19,14 +19,15 @@
 
 <template id="home-page">
   <div class="vue-component">
-
     <ul>
-      <li v-for="task in tasks">
-        {{ task.id }} --- {{ task.text }} --- Completed: {{ task.completed }}
-      </li>
+      <li v-for="task in tasks" v-on:click="markComplete(task)">{{ task.text }}</li>
     </ul>
 
-    <input v-model="tasks[0]['text']">
+    <h3>New Task</h3>
+    <div>
+      Task: <input v-model="newTask.text">
+      <button v-on:click="addTask()">Add Task</button>
+    </div>
 
   </div>
 </template>

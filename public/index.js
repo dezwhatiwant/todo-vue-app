@@ -20,10 +20,29 @@ var HomePage = {
           completed: false
         }
       ],
+      newTask: {
+        text: "",
+      }
     };
   },
   created: function() {},
-  methods: {},
+  methods: {
+    addTask: function() {
+      var newTaskInfo = {
+        text: this.newTask.text,
+        completed: false
+      };
+      
+      if (this.newTask.text) {
+        this.tasks.push(newTaskInfo);
+        this.newTask.text = '';
+      }
+    },
+    markComplete: function(inputTask) {
+      var indexOfTask = this.tasks.indexOf(inputTask);
+      this.tasks.splice(indexOfTask, 1);
+    }
+  },
   computed: {}
 };
 
