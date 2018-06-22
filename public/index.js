@@ -4,43 +4,62 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      tasks: [
-        { id: 1,
-          text: "Make the bed",
-          completed: false
-        },
-
-        { id: 2,
-          text: "Mow the lawn",
-          completed: false
-        },
-
-        { id: 3,
-          text: "Feed the dog",
-          completed: false
-        }
-      ],
+      tasks: [],
       newTask: {
         text: "",
       }
     };
   },
-  created: function() {},
+  created: function() {
+    axios
+      .get('/api/tasks')
+      .then(function(response) {
+        this.tasks = response.data;
+      }.bind(this));
+  },
   methods: {
     addTask: function() {
-      var newTaskInfo = {
-        text: this.newTask.text,
-        completed: false
-      };
-      
       if (this.newTask.text) {
-        this.tasks.push(newTaskInfo);
-        this.newTask.text = '';
+        var clientParams = {
+          text: this.newTask.text,
+          completed: false
+        };
+
+        axios
+          .post('/api/tasks', clientParams)
+          .then(function(response) {
+            this.tasks.push(response.data);
+            this.newTask.text = '';
+          }.bind(this));
+      
       }
     },
-    markComplete: function(inputTask) {
-      var indexOfTask = this.tasks.indexOf(inputTask);
-      this.tasks.splice(indexOfTask, 1);
+    deleteTask: function(inputTask) {
+      var index = inputTask
+      axios
+        .delete('/api/tasks/' + inputTask.id );
+    },
+    toggleCompleted: function(inputTask) {
+      // inputTask.completed = !inputTask.completed;
+      this.$set(inputTask, "completed", !(inputTask.completed));
+    },
+    countIncomplete: function(inputTask) {
+      var count = 0;
+      this.tasks.forEach(function(task) {
+        if (!task.completed) {
+          count++;   
+        }
+      });     
+      return count;
+    },
+    deleteCompleted: function() {
+      var incompleTasks = [];
+      this.tasks.forEach(function(task) {
+        if (!task.completed) {
+          incompleTasks.push(task);
+        }
+      });
+      this.tasks = incompleTasks;
     }
   },
   computed: {}
